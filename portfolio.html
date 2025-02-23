@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion et Inscription</title>
+    <style>
+        /* Styles CSS */
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('background1.jpg'); /* Remplacez par le chemin de votre image */
+       background-size: cover; /* Ajuste l'image pour couvrir tout l'arrière-plan */
+       background-position: center; /* Centre l'image */
+       background-repeat: no-repeat; /* Empêche la répétition de l'image */
+       background-attachment: fixed; /* Fixe l'image pour qu'elle ne défile pas avec la page */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .switch-form {
+            color: #007bff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Formulaire de connexion -->
+        <div id="loginForm">
+            <h2>Connexion</h2>
+            <form id="signInForm">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Se connecter</button>
+            </form>
+
+            <p class="switch-form" onclick="showSignUp()">Pas encore inscrit ? S'inscrire</p>
+            <p id="errorMessage" class="error-message"></p>
+        </div>
+
+        <!-- Formulaire d'inscription -->
+        <div id="signupForm" class="hidden">
+            <h2>Inscription</h2>
+            <form id="signUpForm">
+                <label for="firstname">Prénom:</label>
+                <input type="text" id="firstname" name="firstname" required>
+
+                <label for="lastname">Nom:</label>
+                <input type="text" id="lastname" name="lastname" required>
+
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" name="signup-email" required>
+
+                <label for="signup-password">Mot de passe:</label>
+                <input type="password" id="signup-password" name="signup-password" required>
+
+                <label for="phone">Numéro de téléphone:</label>
+                <input type="tel" id="phone" name="phone" required>
+
+                <label for="gender">Genre:</label>
+                <select id="gender" name="gender" required>
+                    <option value="">Sélectionner</option>
+                    <option value="male">Homme</option>
+                    <option value="female">Femme</option>
+                    <option value="other">Autre</option>
+                </select>
+
+                <label for="dob">Date de naissance:</label>
+                <input type="date" id="dob" name="dob" required>
+
+                <button type="submit">S'inscrire</button>
+            </form>
+
+            <p class="switch-form" onclick="showSignIn()">Déjà inscrit ? Se connecter</p>
+            <p id="signupErrorMessage" class="error-message"></p>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour afficher le formulaire d'inscription
+        function showSignUp() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('signupForm').classList.remove('hidden');
+        }
+
+        // Fonction pour afficher le formulaire de connexion
+        function showSignIn() {
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        }
+
+        // Validation des champs
+        function validateEmail(email) {
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return regex.test(email);
+        }
+
+        function validatePassword(password) {
+            const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            return regex.test(password);
+        }
+
+        function validatePhone(phone) {
+            const regex = /^\+?[0-9]{10,15}$/;
+            return regex.test(phone);
+        }
+
+        // Gestion de la connexion
+        document.getElementById('signInForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!validateEmail(email)) {
+                document.getElementById('errorMessage').textContent = 'Email invalide.';
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                document.getElementById('errorMessage').textContent = 'Mot de passe invalide. Il doit contenir au moins 8 caractères, une lettre et un chiffre.';
+                return;
+            }
+
+            // Simuler une connexion réussie
+            alert('Connexion réussie !');
+            window.location.href = 'file:///C:/Users/EL%20ARBANI/Desktop/web_portfolio/test1.html';
+        });
+
+        // Gestion de l'inscription
+        document.getElementById('signUpForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const firstname = document.getElementById('firstname').value;
+            const lastname = document.getElementById('lastname').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const phone = document.getElementById('phone').value;
+            const gender = document.getElementById('gender').value;
+            const dob = document.getElementById('dob').value;
+
+            if (!validateEmail(email)) {
+                document.getElementById('signupErrorMessage').textContent = 'Email invalide.';
+                return;
+            }
+
+            if (!validatePassword(password)) {
+                document.getElementById('signupErrorMessage').textContent = 'Mot de passe invalide. Il doit contenir au moins 8 caractères, une lettre et un chiffre.';
+                return;
+            }
+
+            if (!validatePhone(phone)) {
+                document.getElementById('signupErrorMessage').textContent = 'Numéro de téléphone invalide.';
+                return;
+            }
+
+            // Simuler une inscription réussie
+            alert('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+            showSignIn();
+        });
+    </script>
+</body>
+</html>
